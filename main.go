@@ -17,9 +17,14 @@ func main() {
 	var path string
 
 	// extract the repository path
-	if len(os.Args) > 2 {
-		vendor = os.Args[1]
-		path = os.Args[2]
+	if len(os.Args) > 1 {
+		if len(os.Args) <= 2 {
+			vendor = "drone"
+			path = os.Args[1]
+		} else {
+			vendor = os.Args[1]
+			path = os.Args[2]
+		}
 	}
 
 	// if the path is a repository url,
