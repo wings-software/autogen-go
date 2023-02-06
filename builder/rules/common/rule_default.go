@@ -17,7 +17,7 @@ func ConfigureDefault(fsys fs.FS, pipeline *spec.Pipeline) error {
 	stage := pipeline.Stages[0].Spec.(*spec.StageCI)
 
 	// ignore if stage already contains steps
-	if len(stage.Steps) == 0 {
+	if len(stage.Steps) > 0 {
 		return nil
 	}
 
@@ -29,7 +29,6 @@ func ConfigureDefault(fsys fs.FS, pipeline *spec.Pipeline) error {
 	}
 
 	// add dummy hello world step
-	utils.CreateScriptStep(image, "echo", "echo hello world")
-
+	stage.Steps = append(stage.Steps, utils.CreateScriptStep(image, "echo", "echo hello world"))
 	return nil
 }
