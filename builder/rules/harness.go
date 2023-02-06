@@ -2,8 +2,8 @@ package rules
 
 type Harness struct{}
 
-func NewHarness() Drone {
-	return Drone{}
+func NewHarness() Harness {
+	return Harness{}
 }
 
 func (h Harness) GetRules() []Rule {
