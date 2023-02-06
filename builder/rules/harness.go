@@ -1,7 +1,6 @@
 package rules
 
 import (
-	"github.com/wings-software/autogen-go/builder/rules/common"
 	"github.com/wings-software/autogen-go/builder/rules/harness"
 )
 
@@ -14,15 +13,15 @@ func NewHarness() Harness {
 func (h Harness) GetRules() []Rule {
 	return []Rule{
 		harness.ConfigurePipelineVersion,
-		common.ConfigurePlatform,
-		common.ConfigureGo,
-		common.ConfigureNode,
-		common.ConfigurePython,
-		common.ConfigureRails,
-		common.ConfigureRuby,
-		common.ConfigureRust,
-		common.ConfigureSwift,
-		common.ConfigureDocker,
-		common.ConfigureDefault,
+		harness.ConfigurePlatform,
+		harness.ConfigureGo,
+		harness.ConfigureNode,
+		harness.ConfigurePython,
+		harness.ConfigureRails,
+		harness.ConfigureRuby,
+		harness.ConfigureRust,
+		harness.ConfigureSwift,
+		harness.ConfigureDocker,
+		harness.ConfigureDefault,
 	}
 }

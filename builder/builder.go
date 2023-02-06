@@ -51,7 +51,3 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 
 	return yaml.Marshal(pipeline)
 }
-
-//
-// helper functions.
-//
