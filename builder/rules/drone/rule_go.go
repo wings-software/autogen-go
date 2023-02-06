@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package builder
+package drone
 
 import (
 	"io/fs"
 
 	spec "github.com/drone/spec/dist/go"
+	"github.com/wings-software/autogen-go/utils"
 )
 
 // ConfigureGo configures a Go step.
@@ -15,13 +16,13 @@ func ConfigureGo(fsys fs.FS, pipeline *spec.Pipeline) error {
 	stage := pipeline.Stages[0].Spec.(*spec.StageCI)
 
 	// check for the go.mod file.
-	if !exists(fsys, "go.mod") {
+	if !utils.Exists(fsys, "go.mod") {
 		return nil
 	}
 
 	// check if we should use a container-based
 	// execution environment.
-	useImage := isContainerRuntime(pipeline)
+	useImage := utils.IsContainerRuntime(pipeline)
 
 	// add the go build step
 	{

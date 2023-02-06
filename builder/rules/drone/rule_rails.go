@@ -2,13 +2,14 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package builder
+package drone
 
 import (
 	"bytes"
 	"io/fs"
 
 	spec "github.com/drone/spec/dist/go"
+	"github.com/wings-software/autogen-go/utils"
 )
 
 // ConfigureRails configures a Ruby on Rails step.
@@ -18,36 +19,36 @@ func ConfigureRails(fsys fs.FS, pipeline *spec.Pipeline) error {
 	// check if we should use a container-based
 	// execution environment.
 	var image string
-	if isContainerRuntime(pipeline) {
+	if utils.IsContainerRuntime(pipeline) {
 		image = "ruby"
 	}
 
 	// check for a ruby gemfile
-	if exists(fsys, "Gemfile") {
+	if utils.Exists(fsys, "Gemfile") {
 
 		// ignore gemfiles that do not contain the
 		// rails dependency
-		gemfile, _ := read(fsys, "Gemfile")
+		gemfile, _ := utils.Read(fsys, "Gemfile")
 		if !bytes.Contains(gemfile, []byte("'rails'")) {
 			return nil
 		}
 
-		stage.Steps = append(stage.Steps, createScriptStep(image,
+		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
 			"bundle_install",
 			"bundle install — jobs=3 — retry=3",
 		))
 
-		stage.Steps = append(stage.Steps, createScriptStep(image,
+		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
 			"bundle_db_create",
 			"bundle exec rake db:create",
 		))
 
-		stage.Steps = append(stage.Steps, createScriptStep(image,
+		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
 			"bundle_db_migrate",
 			"bundle exec rake db:migrate",
 		))
 
-		stage.Steps = append(stage.Steps, createScriptStep(image,
+		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
 			"bundle_rspec",
 			"bundle exec rspec",
 		))

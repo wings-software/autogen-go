@@ -2,13 +2,14 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package builder
+package drone
 
 import (
 	"io/fs"
 
 	spec "github.com/drone/spec/dist/go"
 	"github.com/drone/spec/dist/go/convert/drone"
+	"github.com/wings-software/autogen-go/utils"
 )
 
 // FromDrone configures a pipeline from a Drone yaml. If a Drone
@@ -17,12 +18,12 @@ import (
 func FromDrone(fsys fs.FS, pipeline *spec.Pipeline) error {
 
 	// check if a Drone yaml exists
-	if !exists(fsys, ".drone.yml") {
+	if !utils.Exists(fsys, ".drone.yml") {
 		return nil
 	}
 
 	// get the original drone yaml
-	old, err := read(fsys, ".drone.yml")
+	old, err := utils.Read(fsys, ".drone.yml")
 	if err != nil {
 		return err
 	}
@@ -62,5 +63,5 @@ func FromDrone(fsys fs.FS, pipeline *spec.Pipeline) error {
 		}
 	}
 
-	return SkipAll // Skip all remaining rules
+	return utils.SkipAll // Skip all remaining rules
 }

@@ -2,38 +2,44 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package builder
+package utils
 
 import (
 	"encoding/json"
+	"errors"
 	"io/fs"
 
 	spec "github.com/drone/spec/dist/go"
 )
 
+// SkipAll is used as a return value from Rule to indicate
+// that all remaining rules are to be skipped. It is never
+// returned as an error by the Builder.
+var SkipAll = errors.New("skip everything and stop the pipeline generation")
+
 // helper function returns true if the files or folders
 // matching the specified pattern exist at the base path.
-func match(fsys fs.FS, pattern string) bool {
+func Match(fsys fs.FS, pattern string) bool {
 	matches, _ := fsys.(fs.GlobFS).Glob(pattern)
 	return len(matches) > 0
 }
 
 // helper function returns true if the named file exists
 // at the base path.
-func exists(fsys fs.FS, name string) bool {
+func Exists(fsys fs.FS, name string) bool {
 	_, err := fsys.(fs.StatFS).Stat(name)
 	return err == nil
 }
 
 // helper function reads the named file at the base path.
-func read(fsys fs.FS, name string) ([]byte, error) {
+func Read(fsys fs.FS, name string) ([]byte, error) {
 	return fsys.(fs.ReadFileFS).ReadFile(name)
 }
 
 // helper function unmarshals the named file at the base path
 // into the go structure.
-func unmarshal(fsys fs.FS, name string, v interface{}) error {
-	data, err := read(fsys, name)
+func Unmarshal(fsys fs.FS, name string, v interface{}) error {
+	data, err := Read(fsys, name)
 	if err != nil {
 		return err
 	}
@@ -42,7 +48,7 @@ func unmarshal(fsys fs.FS, name string, v interface{}) error {
 
 // helper function returns true if the runtime engine is
 // kubernetes or is container-based.
-func isContainerRuntime(pipeline *spec.Pipeline) bool {
+func IsContainerRuntime(pipeline *spec.Pipeline) bool {
 	// ensure default stages already added
 	if len(pipeline.Stages) == 0 {
 		return false
@@ -62,4 +68,21 @@ func isContainerRuntime(pipeline *spec.Pipeline) bool {
 	default:
 		return false
 	}
+}
+
+// helper function to create a script step.
+func CreateScriptStep(image, name, command string) *spec.Step {
+	script := new(spec.StepExec)
+	script.Run = command
+
+	if image != "" {
+		script.Image = image
+	}
+
+	step := new(spec.Step)
+	step.Name = name
+	step.Type = "script"
+	step.Spec = script
+
+	return step
 }

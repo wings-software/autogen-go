@@ -6,49 +6,22 @@
 package builder
 
 import (
-	"errors"
 	"io/fs"
 
 	spec "github.com/drone/spec/dist/go"
 	"github.com/ghodss/yaml"
+	"github.com/wings-software/autogen-go/utils"
 )
-
-// Rule defines a pipeline build rule.
-type Rule func(workspace fs.FS, pipeline *spec.Pipeline) error
-
-// SkipAll is used as a return value from Rule to indicate
-// that all remaining rules are to be skipped. It is never
-// returned as an error by the Builder.
-var SkipAll = errors.New("skip everything and stop the pipeline generation")
 
 // Builder builds a pipeline configuration.
 type Builder struct {
-	rules []Rule
+	vendor Vendor
 }
 
 // New creates a new pipeline builder.
-func New() *Builder {
+func New(vendor string) *Builder {
 	return &Builder{
-		rules: []Rule{
-			FromDrone,
-			ConfigurePlatform,
-			ConfigureGo,
-			ConfigureNode,
-			ConfigurePython,
-			ConfigureRails,
-			ConfigureRuby,
-			ConfigureRust,
-			ConfigureSwift,
-			ConfigureDocker,
-			ConfigureDefault,
-		},
-	}
-}
-
-// New creates a new pipeline builder with custom rules.
-func NewRules(rules []Rule) *Builder {
-	return &Builder{
-		rules: rules,
+		vendor: NewVendor(vendor),
 	}
 }
 
@@ -66,8 +39,8 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 
 	pipeline := new(spec.Pipeline)
 	pipeline.Stages = append(pipeline.Stages, stage)
-	for _, rule := range b.rules {
-		if err := rule(fsys, pipeline); err == SkipAll {
+	for _, rule := range b.vendor.GetRules() {
+		if err := rule(fsys, pipeline); err == utils.SkipAll {
 			break
 		}
 
@@ -82,20 +55,3 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 //
 // helper functions.
 //
-
-// helper function to create a script step.
-func createScriptStep(image, name, command string) *spec.Step {
-	script := new(spec.StepExec)
-	script.Run = command
-
-	if image != "" {
-		script.Image = image
-	}
-
-	step := new(spec.Step)
-	step.Name = name
-	step.Type = "script"
-	step.Spec = script
-
-	return step
-}

@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package builder
+package drone
 
 import (
 	"io/fs"
 
 	spec "github.com/drone/spec/dist/go"
+	"github.com/wings-software/autogen-go/utils"
 )
 
 // ConfigureDocker configures a Docker step.
@@ -16,13 +17,13 @@ func ConfigureDocker(fsys fs.FS, pipeline *spec.Pipeline) error {
 
 	// check if a Dockerfile exists
 	// TODO check subdirectories with glob
-	if !exists(fsys, "Dockerfile") {
+	if !utils.Exists(fsys, "Dockerfile") {
 		return nil
 	}
 
 	// check if we should use a container-based
 	// execution environment.
-	useImage := isContainerRuntime(pipeline)
+	useImage := utils.IsContainerRuntime(pipeline)
 
 	// add the docker build step
 	{

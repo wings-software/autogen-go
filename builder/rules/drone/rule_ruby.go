@@ -2,13 +2,14 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package builder
+package drone
 
 import (
 	"bytes"
 	"io/fs"
 
 	spec "github.com/drone/spec/dist/go"
+	"github.com/wings-software/autogen-go/utils"
 )
 
 // ConfigureRuby configures a Ruby on Rails step.
@@ -18,23 +19,23 @@ func ConfigureRuby(fsys fs.FS, pipeline *spec.Pipeline) error {
 	// check if we should use a container-based
 	// execution environment.
 	var image string
-	if isContainerRuntime(pipeline) {
+	if utils.IsContainerRuntime(pipeline) {
 		image = "ruby"
 	}
 
 	// generate pipeline steps for rakefiles
-	if exists(fsys, "Rakefile") {
-		rakefile, _ := read(fsys, "Rakefile")
+	if utils.Exists(fsys, "Rakefile") {
+		rakefile, _ := utils.Read(fsys, "Rakefile")
 
 		// ignore ruby on rails.  we will handle rails
 		// in a separate rule.
-		gemfile, _ := read(fsys, "Gemfile")
+		gemfile, _ := utils.Read(fsys, "Gemfile")
 		if bytes.Contains(gemfile, []byte("'rails'")) {
 			return nil
 		}
 
 		// bundle install
-		stage.Steps = append(stage.Steps, createScriptStep(image,
+		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
 			"bundle_install",
 			"bundle install --local || bundle install",
 		))
@@ -45,7 +46,7 @@ func ConfigureRuby(fsys fs.FS, pipeline *spec.Pipeline) error {
 		// look for well known :compile command
 		if bytes.Contains(rakefile, []byte(":compile")) {
 			raketasks++
-			stage.Steps = append(stage.Steps, createScriptStep(image,
+			stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
 				"rake_compile",
 				"bundle exec rake compile",
 			))
@@ -54,7 +55,7 @@ func ConfigureRuby(fsys fs.FS, pipeline *spec.Pipeline) error {
 		// look for well known :test command
 		if bytes.Contains(rakefile, []byte(":test")) {
 			raketasks++
-			stage.Steps = append(stage.Steps, createScriptStep(image,
+			stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
 				"rake_test",
 				"bundle exec rake test",
 			))
@@ -63,7 +64,7 @@ func ConfigureRuby(fsys fs.FS, pipeline *spec.Pipeline) error {
 		// if no raketasks added run the default
 		if raketasks == 0 {
 			raketasks++
-			stage.Steps = append(stage.Steps, createScriptStep(image,
+			stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
 				"rake",
 				"bundle exec rake",
 			))

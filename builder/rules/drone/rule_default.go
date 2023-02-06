@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package builder
+package drone
 
 import (
 	"io/fs"
 
 	spec "github.com/drone/spec/dist/go"
+	"github.com/wings-software/autogen-go/utils"
 )
 
 // ConfigureDefault configures a default step if the system
@@ -23,12 +24,12 @@ func ConfigureDefault(fsys fs.FS, pipeline *spec.Pipeline) error {
 	// check if we should use a container-based
 	// execution environment.
 	var image string
-	if isContainerRuntime(pipeline) {
+	if utils.IsContainerRuntime(pipeline) {
 		image = "alpine"
 	}
 
 	// add dummy hello world step
-	createScriptStep(image, "echo", "echo hello world")
+	utils.CreateScriptStep(image, "echo", "echo hello world")
 
 	return nil
 }

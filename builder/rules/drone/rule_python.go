@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package builder
+package drone
 
 import (
 	"io/fs"
@@ -10,8 +10,8 @@ import (
 	spec "github.com/drone/spec/dist/go"
 )
 
-// ConfigureSwift configures a Swift step.
-func ConfigureSwift(fsys fs.FS, pipeline *spec.Pipeline) error {
+// ConfigurePython configures a Python step.
+func ConfigurePython(fsys fs.FS, pipeline *spec.Pipeline) error {
 	_ = pipeline.Stages[0].Spec.(*spec.StageCI)
 
 	// TODO

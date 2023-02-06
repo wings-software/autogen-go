@@ -7,17 +7,19 @@ import (
 	"os"
 	"strings"
 
-	"github.com/harness/autogen-go/builder"
-	"github.com/harness/autogen-go/chroot"
-	"github.com/harness/autogen-go/cloner"
+	"github.com/wings-software/autogen-go/builder"
+	"github.com/wings-software/autogen-go/chroot"
+	"github.com/wings-software/autogen-go/cloner"
 )
 
 func main() {
+	var vendor string
 	var path string
 
 	// extract the repository path
-	if len(os.Args) > 1 {
-		path = os.Args[1]
+	if len(os.Args) > 2 {
+		vendor = os.Args[1]
+		path = os.Args[2]
 	}
 
 	// if the path is a repository url,
@@ -53,7 +55,7 @@ func main() {
 
 	// builds the pipeline configuration based on
 	// the contents of the virtual filesystem.
-	builder := builder.New()
+	builder := builder.New(vendor)
 	out, err := builder.Build(chroot)
 	if err != nil {
 		log.Fatalln(err)

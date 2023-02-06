@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package builder
+package drone
 
 import (
 	"io/fs"
 
 	spec "github.com/drone/spec/dist/go"
+	"github.com/wings-software/autogen-go/utils"
 )
 
 // ConfigurePlatform configures the platform
@@ -32,5 +33,5 @@ func ConfigurePlatform(fsys fs.FS, pipeline *spec.Pipeline) error {
 // helper function returns true if the project has an xcode directory
 // in the root or a subdirectory of the repository.
 func isXcode(workspace fs.FS) bool {
-	return match(workspace, "*.xcodeproj") || match(workspace, "*/*.xcodeproj")
+	return utils.Match(workspace, "*.xcodeproj") || utils.Match(workspace, "*/*.xcodeproj")
 }
