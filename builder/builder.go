@@ -38,6 +38,7 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 	stage.Spec = stageci
 
 	pipeline := new(spec.Pipeline)
+	pipeline.Name = "sample pipeline"
 	pipeline.Stages = append(pipeline.Stages, stage)
 	for _, rule := range b.vendor.GetRules() {
 		if err := rule(fsys, pipeline); err == utils.SkipAll {
