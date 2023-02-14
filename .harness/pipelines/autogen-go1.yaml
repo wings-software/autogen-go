@@ -1,0 +1,23 @@
+name: Sample Pipeline_1676371802083
+stages:
+  - name: build
+    spec:
+      steps:
+        - name: go_build
+          spec:
+            run: go build
+          type: script
+        - name: go_test
+          spec:
+            run: go test -v ./...
+          type: script
+        - name: docker_build
+          spec:
+            image: plugins/docker
+            with:
+              dry_run: true
+              repo: hello/world
+              tags: latest
+          type: plugin
+    type: ci
+version: 1
