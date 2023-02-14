@@ -28,9 +28,10 @@ func New(vendor string) *Builder {
 // Build the pipeline configuration.
 func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 	stageci := new(spec.StageCI)
-	stageci.Platform = new(spec.Platform)
-	stageci.Platform.Os = spec.OSLinux
-	stageci.Platform.Arch = spec.ArchAmd64
+	// removing it as its not required.
+	// stageci.Platform = new(spec.Platform)
+	// stageci.Platform.Os = spec.OSLinux
+	// stageci.Platform.Arch = spec.ArchAmd64
 
 	stage := new(spec.Stage)
 	stage.Name = "build"
