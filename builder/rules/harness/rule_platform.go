@@ -16,10 +16,10 @@ func ConfigurePlatform(fsys fs.FS, pipeline *spec.Pipeline) error {
 	stage := pipeline.Stages[0].Spec.(*spec.StageCI)
 
 	// assume the os and architecture are linux / amd64
-	stage.Platform = &spec.Platform{
-		Os:   spec.OSLinux,
-		Arch: spec.ArchAmd64,
-	}
+	// stage.Platform = &spec.Platform{
+	// 	Os:   spec.OSLinux,
+	// 	Arch: spec.ArchAmd64,
+	// }
 
 	// unless this is an xcode project
 	if isXcode(fsys) {
