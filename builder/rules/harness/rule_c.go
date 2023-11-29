@@ -106,7 +106,7 @@ func ConfigureC(fsys fs.FS, pipeline *spec.Pipeline) error {
 		} else if utils.Match(fsys, "Makefile.am") {
 			{
 				script := new(spec.StepExec)
-				script.Run = "./bootstrap && ./configure"
+				script.Run = "./bootstrap && ./configure --with-coverage"
 				step := new(spec.Step)
 				step.Name = "configure"
 				step.Type = "script"
