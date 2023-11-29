@@ -117,7 +117,7 @@ func ConfigureC(fsys fs.FS, pipeline *spec.Pipeline) error {
 
 			{
 				script := new(spec.StepExec)
-				script.Run = "make clean && make check && make cov"
+				script.Run = "make clean && make check"
 
 				step := new(spec.Step)
 				step.Name = "run tests and get coverage"
@@ -131,6 +131,18 @@ func ConfigureC(fsys fs.FS, pipeline *spec.Pipeline) error {
 						Type: "JUnit",
 					},
 				}
+				stage.Steps = append(stage.Steps, step)
+			}
+
+			{
+				script := new(spec.StepExec)
+				script.Run = "make cov"
+
+				step := new(spec.Step)
+				step.Name = "get coverage"
+				step.Type = "script"
+				step.Spec = script
+
 				stage.Steps = append(stage.Steps, step)
 			}
 		}
