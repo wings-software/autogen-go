@@ -23,5 +23,6 @@ func (h Harness) GetRules() []Rule {
 		harness.ConfigureSwift,
 		harness.ConfigureDocker,
 		harness.ConfigureDefault,
+		harness.ConfigureScala,
 	}
 }
