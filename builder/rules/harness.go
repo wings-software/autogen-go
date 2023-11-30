@@ -21,7 +21,9 @@ func (h Harness) GetRules() []Rule {
 		harness.ConfigureRuby,
 		harness.ConfigureRust,
 		harness.ConfigureSwift,
-		harness.ConfigureDocker,
 		harness.ConfigureDefault,
+		harness.ConfigureKotlin,
+		harness.ConfigureKotlinwithMaven,
+		harness.ConfigureDocker,
 	}
 }
