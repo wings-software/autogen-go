@@ -38,6 +38,8 @@ func ConfigureDocker(fsys fs.FS, pipeline *spec.Pipeline) error {
 			"tags":    "latest",
 			"repo":    repo,
 			"dry_run": true,
+			"username": "<+input>",
+			"password": "<+input>",
 		}
 
 		if useImage {
