@@ -86,3 +86,52 @@ func CreateScriptStep(image, name, command string) *spec.Step {
 
 	return step
 }
+
+func CreateScriptWithUserDefinition(image, name, command string) *spec.Step {
+	script := new(spec.StepExec)
+	script.Run = command
+	script.User = "1000"
+	if image != "" {
+		script.Image = image
+	}
+
+	step := new(spec.Step)
+	step.Name = name
+	step.Type = "script"
+	step.Spec = script
+
+	return step
+}
+
+func CreateScriptWithUserDefinitionAndReportPath(image, name, command string) *spec.Step {
+	script := new(spec.StepExec)
+	script.Run = command
+	script.User = "1000"
+	script.Reports = []*spec.Report{{Type: "Junit", Path: spec.Stringorslice{"**/*.xml"}}}
+	if image != "" {
+		script.Image = image
+	}
+
+	step := new(spec.Step)
+	step.Name = name
+	step.Type = "script"
+	step.Spec = script
+
+	return step
+}
+
+func CreateScriptWithTestReports(image, name, command string) *spec.Step {
+	script := new(spec.StepExec)
+	script.Run = command
+	script.Reports = []*spec.Report{{Type: "Junit", Path: spec.Stringorslice{"**/*.xml"}}}
+	if image != "" {
+		script.Image = image
+	}
+
+	step := new(spec.Step)
+	step.Name = name
+	step.Type = "script"
+	step.Spec = script
+
+	return step
+}
