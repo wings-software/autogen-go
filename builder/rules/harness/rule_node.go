@@ -39,18 +39,31 @@ func ConfigureNode(fsys fs.FS, pipeline *spec.Pipeline) error {
 		return nil
 	}
 
-	// add well-known test
-	if _, ok := json.Scripts["test"]; ok {
+	// add test with junit for xml reports otherwise add well known test step
+	if _, ok := json.Scripts["test:junit"]; ok {
+		stage.Steps = append(stage.Steps, utils.CreateScriptStepWithReports(image,
+			"npm_test_reports",
+			"npm run test:junit",
+		))
+	} else if _, ok := json.Scripts["test"]; ok {
 		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
 			"npm_test",
 			"npm run test",
 		))
 	}
 
+	// add well-known jest coverage command
+	if _, ok := json.Scripts["coverage"]; ok {
+		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
+			"npm_coverage",
+			"npm run coverage",
+		))
+	}
+
 	// add well-known lint command
 	if _, ok := json.Scripts["lint"]; ok {
 		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
-			"npm_test",
+			"npm_lint",
 			"npm run lint",
 		))
 	}
