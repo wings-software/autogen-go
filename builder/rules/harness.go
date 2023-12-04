@@ -17,6 +17,8 @@ func (h Harness) GetRules() []Rule {
 		harness.ConfigureGo,
 		harness.ConfigureNode,
 		harness.ConfigurePython,
+		harness.ConfigureC,
+		harness.ConfigureCPP,
 		harness.ConfigureRails,
 		harness.ConfigureRuby,
 		harness.ConfigureRust,
