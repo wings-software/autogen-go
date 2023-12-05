@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_wings_software_autogen_go_1701752820294-push-trigger-input-set
+  identifier: Build_wings_software_autogen_go_1701752820294pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: shauryaTest
+  pipeline:
+    identifier: Build_wings_software_autogen_go_1701752820294
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
