@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_wings_software_autogen_go_1701752820294-pr-trigger-input-set
+  identifier: Build_wings_software_autogen_go_1701752820294prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: shauryaTest
+  pipeline:
+    identifier: Build_wings_software_autogen_go_1701752820294
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
