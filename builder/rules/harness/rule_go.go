@@ -44,14 +44,39 @@ func ConfigureGo(fsys fs.FS, pipeline *spec.Pipeline) error {
 	// add the go test step
 	{
 		script := new(spec.StepExec)
-		script.Run = "go test -v ./..."
+		script.Run = "go test -coverprofile=coverage.out ./..."
 
 		if useImage {
 			script.Image = "golang"
 		}
 
 		step := new(spec.Step)
-		step.Name = "go_test"
+		step.Name = "go_test_coverage"
+		step.Type = "script"
+		step.Spec = script
+
+		stage.Steps = append(stage.Steps, step)
+	}
+
+	// add the go test with report step
+	{
+		script := new(spec.StepExec)
+		script.Run = `export GOBIN=/home/harness/go/bin
+		export PATH=/home/harness/go/bin:$PATH
+		echo $PATH
+		go install github.com/jstemmer/go-junit-report/v2@latest
+		go test -v 2>&1 ./... | go-junit-report -set-exit-code > report.xml`
+
+		if useImage {
+			script.Image = "golang"
+		}
+
+		script.Reports = append(script.Reports, &spec.Report{
+			Type: "junit",
+			Path: []string{"/harness/report.xml"},
+		})
+		step := new(spec.Step)
+		step.Name = "go_test_report"
 		step.Type = "script"
 		step.Spec = script
 

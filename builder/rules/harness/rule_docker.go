@@ -35,9 +35,11 @@ func ConfigureDocker(fsys fs.FS, pipeline *spec.Pipeline) error {
 		script := new(spec.StepPlugin)
 		script.Image = "plugins/docker"
 		script.With = map[string]interface{}{
-			"tags":    "latest",
-			"repo":    repo,
-			"dry_run": true,
+			"tags":     "latest",
+			"repo":     repo,
+			"dry_run":  true,
+			"username": "<+input>",
+			"password": "<+input>",
 		}
 
 		if useImage {
