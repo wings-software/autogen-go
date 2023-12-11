@@ -15,8 +15,11 @@ func (h Harness) GetRules() []Rule {
 		harness.ConfigurePipelineVersion,
 		harness.ConfigurePlatform,
 		harness.ConfigureGo,
+		harness.ConfigureGoGlide,
 		harness.ConfigureNode,
 		harness.ConfigurePython,
+		harness.ConfigureC,
+		harness.ConfigureCPP,
 		harness.ConfigureRails,
 		harness.ConfigureRuby,
 		harness.ConfigureRust,
@@ -24,5 +27,6 @@ func (h Harness) GetRules() []Rule {
 		harness.ConfigureDocker,
 		harness.ConfigureDefault,
 		harness.ConfigureScala,
+		harness.ConfigurePHP,
 	}
 }

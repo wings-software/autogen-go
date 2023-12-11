@@ -8,6 +8,7 @@ package builder
 import (
 	"io/fs"
 
+	"github.com/drone/go-convert/convert/harness/downgrader"
 	spec "github.com/drone/spec/dist/go"
 	"github.com/ghodss/yaml"
 	"github.com/wings-software/autogen-go/utils"
@@ -15,13 +16,18 @@ import (
 
 // Builder builds a pipeline configuration.
 type Builder struct {
-	vendor Vendor
+	vendor  Vendor
+	version string
 }
 
 // New creates a new pipeline builder.
-func New(vendor string) *Builder {
+func New(vendor, version string) *Builder {
+	if version == "" {
+		version = "v1"
+	}
 	return &Builder{
-		vendor: NewVendor(vendor),
+		vendor:  NewVendor(vendor),
+		version: version,
 	}
 }
 
@@ -51,5 +57,12 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 		// never prevent yaml generation.
 	}
 
-	return yaml.Marshal(pipeline)
+	yml, err := yaml.Marshal(pipeline)
+	if (b.version == "v1") || (b.version == "default") {
+		return yml, err
+	} else {
+		d := downgrader.New()
+		v0Yaml, err := d.Downgrade(yml)
+		return v0Yaml, err
+	}
 }
