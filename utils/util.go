@@ -119,3 +119,20 @@ func CreateScriptWithUserDefinitionAndReportPath(image, name, command string) *s
 
 	return step
 }
+
+// helper function to create a script step.
+func CreateScriptStepWithReports(image, name, command string) *spec.Step {
+	script := new(spec.StepExec)
+	script.Run = command
+	script.Reports = []*spec.Report{{Type: "Junit", Path: spec.Stringorslice{"**/*.xml"}}}
+	if image != "" {
+		script.Image = image
+	}
+
+	step := new(spec.Step)
+	step.Name = name
+	step.Type = "script"
+	step.Spec = script
+
+	return step
+}
