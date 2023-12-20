@@ -13,6 +13,6 @@ func NewVendor(vendor string) Vendor {
 	case "harness":
 		return rules.NewHarness()
 	default:
-		return rules.NewDrone()
+		return rules.NewHarness()
 	}
 }

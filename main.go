@@ -53,7 +53,7 @@ func main() {
 
 	// builds the pipeline configuration based on
 	// the contents of the virtual filesystem.
-	builder := builder.New("harness")
+	builder := builder.New("harness", "v1")
 	out, err := builder.Build(chroot)
 	if err != nil {
 		log.Fatalln(err)
