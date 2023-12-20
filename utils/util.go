@@ -7,7 +7,9 @@ package utils
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/fs"
+	"os"
 
 	spec "github.com/drone/spec/dist/go"
 )
@@ -29,6 +31,39 @@ func Match(fsys fs.FS, pattern string) bool {
 func Exists(fsys fs.FS, name string) bool {
 	_, err := fsys.(fs.StatFS).Stat(name)
 	return err == nil
+}
+
+// // helper function returns true if the dir exist in base path
+// at the base path.
+func IsDirectoryPresent(fsys fs.FS, directoryPath string) bool {
+	// Use os.Stat to check if the directory exists
+	// Get the current working directory
+	currentDir, err := os.Getwd()
+	if err != nil {
+		fmt.Println("Error getting current working directory:", err)
+		//return
+	}
+
+	fmt.Println("Current Working Directory:", currentDir)
+	fmt.Println("kotlin Directory:", currentDir+directoryPath)
+
+	_, err = os.Stat(directoryPath + directoryPath)
+
+	// Check if there is no error and the path exists and is a directory
+	if err == nil {
+		fmt.Println("kotlin Directory is present:", currentDir+directoryPath)
+		return true
+	}
+
+	// Check if the error is due to the directory not existing
+	if os.IsNotExist(err) {
+		fmt.Println("kotlin Directory is not present:", currentDir+directoryPath)
+		return false
+	}
+
+	// Handle other errors (e.g., permission issues)
+	fmt.Println("Error checking directory:", err)
+	return false
 }
 
 // helper function reads the named file at the base path.
