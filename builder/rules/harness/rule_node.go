@@ -29,7 +29,7 @@ func ConfigureNode(fsys fs.FS, pipeline *spec.Pipeline) error {
 
 	// add the npm install step
 	stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
-		"npm_install",
+		"install dependencies",
 		"npm install",
 	))
 
@@ -42,12 +42,12 @@ func ConfigureNode(fsys fs.FS, pipeline *spec.Pipeline) error {
 	// add test with junit for xml reports otherwise add well known test step
 	if _, ok := json.Scripts["test:junit"]; ok {
 		stage.Steps = append(stage.Steps, utils.CreateScriptStepWithReports(image,
-			"npm_test_reports",
+			"test_reports",
 			"npm run test:junit",
 		))
 	} else if _, ok := json.Scripts["test"]; ok {
 		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
-			"npm_test",
+			"test",
 			"npm run test",
 		))
 	}
@@ -55,7 +55,7 @@ func ConfigureNode(fsys fs.FS, pipeline *spec.Pipeline) error {
 	// add well-known jest coverage command
 	if _, ok := json.Scripts["coverage"]; ok {
 		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
-			"npm_coverage",
+			"coverage",
 			"npm run coverage",
 		))
 	}
@@ -63,7 +63,7 @@ func ConfigureNode(fsys fs.FS, pipeline *spec.Pipeline) error {
 	// add well-known lint command
 	if _, ok := json.Scripts["lint"]; ok {
 		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
-			"npm_lint",
+			"lint",
 			"npm run lint",
 		))
 	}
@@ -71,24 +71,32 @@ func ConfigureNode(fsys fs.FS, pipeline *spec.Pipeline) error {
 	// add well-known e2e command
 	if _, ok := json.Scripts["e2e"]; ok {
 		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
-			"npm_e2e",
+			"e2e",
 			"npm run e2e",
-		))
-	}
-
-	// add well-known e2e docker if infra is cloud
-	if _, ok := json.Scripts["e2e:docker"]; ok && image == "" {
-		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
-			"npm_e2e_docker",
-			"npm run e2e docker",
 		))
 	}
 
 	// add well-known dist command
 	if _, ok := json.Scripts["dist"]; ok {
 		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
-			"npm_dist",
+			"dist",
 			"npm run dist",
+		))
+	}
+
+	// add well-known build command
+	if _, ok := json.Scripts["build"]; ok {
+		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
+			"build",
+			"npm run build",
+		))
+	}
+
+	// add well-known e2e docker if infra is cloud
+	if _, ok := json.Scripts["e2e:docker"]; ok && image == "" {
+		stage.Steps = append(stage.Steps, utils.CreateScriptStep(image,
+			"e2e_docker",
+			"npm run e2e docker",
 		))
 	}
 
