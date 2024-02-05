@@ -10,8 +10,8 @@ github.com/docker/go-units v0.5.0 h1:69rxXcBk27SvSaaxTtLh/8llcHD8vYHT7WSdRZ/jvr4
 github.com/docker/go-units v0.5.0/go.mod h1:fgPhTUdO+D/Jk86RDLlptpiXQzgHJF7gydDDbaIK4Dk=
 github.com/drone/drone-go v1.7.1 h1:ZX+3Rs8YHUSUQ5mkuMLmm1zr1ttiiE2YGNxF3AnyDKw=
 github.com/drone/drone-go v1.7.1/go.mod h1:fxCf9jAnXDZV1yDr0ckTuWd1intvcQwfJmTRpTZ1mXg=
-github.com/drone/spec v0.0.0-20230203155728-6f5b316cad3e h1:9IrlHM84CSV6ui+PnxWRTslm8VJiyvpyd8tIsUVCSKE=
-github.com/drone/spec v0.0.0-20230203155728-6f5b316cad3e/go.mod h1:lhM5nV3zKzXnHD2WPLQ2KoJ/65hr3vr0KaiKod2T3W8=
+github.com/drone/spec v0.0.0-20230301233334-6c93389a6577 h1:s3TIjPd131SWCuLEK2cvkUyn7m/Lx4OQEqOyjYhFgk8=
+github.com/drone/spec v0.0.0-20230301233334-6c93389a6577/go.mod h1:ToM1HG/JNy3GghchmT/Sv4fzfSFWIqpws5umZIxeEkY=
 github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
 github.com/google/go-cmp v0.2.0/go.mod h1:oXzfMopK8JAjlY9xF4vHSVASa0yLyX7SntLO5aqRK0M=

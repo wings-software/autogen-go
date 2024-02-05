@@ -3,7 +3,7 @@ module github.com/wings-software/autogen-go
 go 1.18
 
 require (
-	github.com/drone/spec v0.0.0-20230203155728-6f5b316cad3e
+	github.com/drone/spec v0.0.0-20230301233334-6c93389a6577
 	github.com/ghodss/yaml v1.0.0
 )
 

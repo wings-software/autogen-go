@@ -43,7 +43,7 @@ func FromDrone(fsys fs.FS, pipeline *spec.Pipeline) error {
 	// copy into the pipeline stuct
 	pipeline.Name = pipeline_.Name
 	pipeline.Inputs = pipeline_.Inputs
-	pipeline.Registry = pipeline_.Registry
+	//pipeline.Registry = pipeline_.Registry
 	pipeline.Stages = pipeline_.Stages
 	pipeline.Version = pipeline_.Version
 
