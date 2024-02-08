@@ -6,9 +6,12 @@ pipeline:
   properties:
     ci:
       codebase:
-        build: <+input>
         connectorRef: account.CItestGitConnectorz0UqYZn1Pg
         repoName: wings-software/autogen-go
+        build: <+input>
+        depth: <+input>
+        sslVerify: <+input>
+        prCloneStrategy: <+input>
   stages:
     - stage:
         identifier: build
