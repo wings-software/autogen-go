@@ -39,6 +39,8 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 	// stageci.Platform.Os = spec.OSLinux
 	// stageci.Platform.Arch = spec.ArchAmd64
 
+	stageci.Cache = new(spec.Cache)
+	stageci.Cache.Enabled = true
 	stage := new(spec.Stage)
 	stage.Name = "build"
 	stage.Type = "ci"
