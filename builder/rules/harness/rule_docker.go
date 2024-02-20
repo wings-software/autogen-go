@@ -33,7 +33,7 @@ func ConfigureDocker(fsys fs.FS, pipeline *spec.Pipeline) error {
 		// this as the image name, if possible.
 
 		script := new(spec.StepPlugin)
-		script.Image = "plugins/docker"
+		script.Image = "plugins/kaniko-docker"
 		script.With = map[string]interface{}{
 			"tags":     "latest",
 			"repo":     repo,
@@ -43,12 +43,12 @@ func ConfigureDocker(fsys fs.FS, pipeline *spec.Pipeline) error {
 		}
 
 		if useImage {
-			script.Image = "plugins/docker"
+			script.Image = "plugins/kaniko-docker"
 			script.Privileged = true
 		} else {
 			// TODO we should eventually use the container-less
 			// version of the plugin here
-			script.Image = "plugins/docker"
+			script.Image = "plugins/kaniko-docker"
 		}
 
 		step := new(spec.Step)
