@@ -23,8 +23,8 @@ func ConfigurePlatform(fsys fs.FS, pipeline *spec.Pipeline) error {
 
 	// unless this is an xcode project
 	if isXcode(fsys) {
-		stage.Platform.Os = spec.OSMacos
-		stage.Platform.Arch = spec.ArchArm64
+		stage.Platform.Os = spec.OSMacos.String()
+		stage.Platform.Arch = spec.ArchArm64.String()
 	}
 
 	return nil

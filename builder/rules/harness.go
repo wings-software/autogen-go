@@ -12,7 +12,6 @@ func NewHarness() Harness {
 
 func (h Harness) GetRules() []Rule {
 	return []Rule{
-		harness.ConfigurePipelineVersion,
 		harness.ConfigurePlatform,
 		harness.ConfigureGo,
 		harness.ConfigureGoGlide,
