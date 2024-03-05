@@ -3,7 +3,7 @@ module github.com/wings-software/autogen-go
 go 1.19
 
 require (
-	github.com/drone/go-convert v0.0.0-20240220172213-6283d7605ca7
+	github.com/drone/go-convert v0.0.0-20240305070140-a4361ed3dfb6
 	github.com/drone/spec v0.0.0-20230920145636-3827abdce961
 	github.com/ghodss/yaml v1.0.0
 )
