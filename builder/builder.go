@@ -47,7 +47,6 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 	stage.Spec = stageci
 
 	pipeline := new(spec.Pipeline)
-	pipeline.Name = "sample pipeline"
 	pipeline.Stages = append(pipeline.Stages, stage)
 	for _, rule := range b.vendor.GetRules() {
 		if err := rule(fsys, pipeline); err == utils.SkipAll {
@@ -59,7 +58,13 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 		// never prevent yaml generation.
 	}
 
-	yml, err := yaml.Marshal(pipeline)
+	config := new(spec.Config)
+	config.Type = "pipeline"
+	config.Kind = "pipeline"
+	config.Version = 1
+	config.Spec = pipeline
+
+	yml, err := yaml.Marshal(config)
 	if (b.version == "v1") || (b.version == "default") {
 		return yml, err
 	} else {
