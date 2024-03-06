@@ -1,8 +1,8 @@
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/docker/go-units v0.5.0 h1:69rxXcBk27SvSaaxTtLh/8llcHD8vYHT7WSdRZ/jvr4=
 github.com/docker/go-units v0.5.0/go.mod h1:fgPhTUdO+D/Jk86RDLlptpiXQzgHJF7gydDDbaIK4Dk=
-github.com/drone/go-convert v0.0.0-20240305164238-a810cce167fd h1:RjIUkMF7oUxrIn4IKUj4DbKjCxTNkC58M/kYSbXFXh0=
-github.com/drone/go-convert v0.0.0-20240305164238-a810cce167fd/go.mod h1:PyCDcuAhGF6W0VJ6qMmlM47dsSyGv/zDiMqeJxMFuGM=
+github.com/drone/go-convert v0.0.0-20240306215313-e7f0bc265a6a h1:dWLWgBCNmu+GsUt+yhlNDkAs09oILeZ96+zG031NMkk=
+github.com/drone/go-convert v0.0.0-20240306215313-e7f0bc265a6a/go.mod h1:PyCDcuAhGF6W0VJ6qMmlM47dsSyGv/zDiMqeJxMFuGM=
 github.com/drone/spec v0.0.0-20230920145636-3827abdce961 h1:aUWrLS2ghyxIpDICpZOV50V1x7JLM3U80UQDQxMKT54=
 github.com/drone/spec v0.0.0-20230920145636-3827abdce961/go.mod h1:KyQZA9qwuscbbM7yTrtZg25Wammoc5GKwaRem8kDA5k=
 github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=
